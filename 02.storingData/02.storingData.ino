@@ -1,5 +1,5 @@
 /*
-  Author:
+  Author: Remy E
 
   Learning Intention:
   The students will learn the different data types used in the C++ language,
@@ -21,10 +21,23 @@
     https://www.arduino.cc/reference/en/language/variables/data-types/stringobject/
 */
 
-void setup() {
+int    counter       = 3000;
+float  temperature = 23.5;
+long   bigNumber   = 100000;
+bool   isOn        = HIGH;
+String deviceName  = "My Arduino";
 
+void setup() {
+  Serial.begin(115200);
+  Serial.println("Name: " + deviceName);
+  Serial.println("Count: " + String(counter));
+  Serial.println("Temperature: " + String(temperature));
+  Serial.println("Big number: " + String(bigNumber));
+  Serial.println("Switched on: " + String(isOn));
 }
 
 void loop() {
-
+  counter = counter + 1000;
+  Serial.println(counter);
+  delay(300);
 }
