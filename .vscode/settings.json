@@ -19,8 +19,8 @@
   "workbench.editorAssociations": {
     "*.md": "vscode.markdown.preview.editor"
   },
-  "workbench.colorTheme": "Dark+",
-  "workbench.iconTheme": "vscode-icons",
+  "workbench.colorTheme": "Dark Modern",
+  "workbench.iconTheme": "vs-seti",
   "github.copilot.enable": {
     "cpp": false,
     "c": false
