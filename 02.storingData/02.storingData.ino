@@ -21,23 +21,16 @@
     https://www.arduino.cc/reference/en/language/variables/data-types/stringobject/
 */
 
-int    counter       = 3000;
-float  temperature = 23.5;
-long   bigNumber   = 100000;
-bool   isOn        = HIGH;
-String deviceName  = "My Arduino";
+double counter;
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Name: " + deviceName);
-  Serial.println("Count: " + String(counter));
-  Serial.println("Temperature: " + String(temperature));
-  Serial.println("Big number: " + String(bigNumber));
-  Serial.println("Switched on: " + String(isOn));
+  Serial.println("Starting counter demo");
+  counter = 100;
 }
 
 void loop() {
-  counter = counter + 1000;
+  counter = counter + 1;         // loop() can use it too
   Serial.println(counter);
-  delay(300);
+  delay(500);
 }
