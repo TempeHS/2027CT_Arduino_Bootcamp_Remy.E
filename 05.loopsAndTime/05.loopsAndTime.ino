@@ -37,11 +37,38 @@
 const int BUTTON_PIN = 4;  // Grove Button on D4
 const int BUZZER_PIN = 5;  // Grove Buzzer on D5
 const int LED_PIN = 6;     // Grove LED on D6
+const int PRESSED_STATE = HIGH;
+
+// `for (int i = 0; i < 10; i++) {` prints: 0-9
+// `for (int i = 0; i <= 10; i++) {` prints: 0-10
+// `for (int i = 10; i > 0; i = i - 2) {` prints: 10-2 in steps of 2
 
 void setup() {
+  randomSeed(analogRead(A1));
+  Serial.begin(115200);
 
+  pinMode(LED_PIN, OUTPUT);
+  pinMode(BUTTON_PIN, INPUT);
 }
 
 void loop() {
+  while (digitalRead(BUTTON_PIN) == PRESSED_STATE);
 
+  unsigned long waitTime = random(2000, 5000);
+  unsigned long waitStart = millis();
+
+  while (millis() - waitStart < waitTime) {
+    if (digitalRead(BUTTON_PIN) == PRESSED_STATE) {
+      Serial.println("you lose");
+      while (digitalRead(BUTTON_PIN) == PRESSED_STATE) {}
+      return;
+    }
+  }
+
+  unsigned long startTime = millis();
+  digitalWrite(LED_PIN, HIGH);
+  while (digitalRead(BUTTON_PIN) != PRESSED_STATE) {}
+  Serial.println(String((millis() - startTime) / 1000.0) + "s");
+  digitalWrite(LED_PIN, LOW);
 }
+

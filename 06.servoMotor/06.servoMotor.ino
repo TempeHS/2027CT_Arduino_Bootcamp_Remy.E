@@ -38,9 +38,9 @@ const int POT_PIN = A0;   // Grove Potentiometer on A0
 Servo myServo;
 
 void setup() {
-
+  myServo.attach(SERVO_PIN);   // servo signal on D3
+  myServo.write(90);           // move to the middle
 }
 
 void loop() {
-
 }
