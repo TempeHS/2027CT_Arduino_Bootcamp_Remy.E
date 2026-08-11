@@ -42,10 +42,49 @@ Ultrasonic ultrasonic(2);  // Grove 3-pin ultrasonic on D2 (single signal pin)
 const int BUZZER_PIN = 5;  // Grove Buzzer on D5
 const int LED_PIN = 6;     // Grove LED on D6
 
-void setup() {
+int readDistance() {
+  return ultrasonic.read();
+}
 
+int classifyZone(int distance, int nearLimit, int farLimit) {
+  if (distance < nearLimit) {
+    return 0;              // danger
+  } else if (distance < farLimit) {
+    return 1;              // warning
+  }
+  return 2;                // safe
+}
+
+void showAlert(int zone){
+  if (zone == 0){
+    digitalWrite(LED_PIN, HIGH);
+    delay(150);
+    digitalWrite(LED_PIN, LOW);
+    delay(150);
+  } else if (zone == 1){
+    digitalWrite(LED_PIN, HIGH);
+    delay(500);
+    digitalWrite(LED_PIN, LOW);
+    delay(500);
+  } else {
+    digitalWrite(LED_PIN, LOW);
+    delay(100);
+  }
+}
+
+void logStatus(int distance, int zone){
+  Serial.print("Distance: " + String(distance)); Serial.println(" Zone: " + String(zone));
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(LED_PIN, OUTPUT);
 }
 
 void loop() {
-
+  int distance = readDistance();
+  int zone = classifyZone(distance, 10, 30);
+  logStatus(distance, zone);
+  showAlert(zone);
+  delay(50);
 }
