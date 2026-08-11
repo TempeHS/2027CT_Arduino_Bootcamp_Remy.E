@@ -39,8 +39,22 @@ Servo myServo;
 
 void setup() {
   myServo.attach(SERVO_PIN);   // servo signal on D3
-  myServo.write(90);           // move to the middle
 }
 
 void loop() {
+  smoothMove(0, 180);
+}
+
+void smoothMove(int fromAngle, int toAngle) {
+  if (fromAngle < toAngle) {
+    for (int a = fromAngle; a <= toAngle; a++) {
+      myServo.write(a);
+      delay(15);
+    }
+  } else {
+    for (int a = fromAngle; a >= toAngle; a--) {
+      myServo.write(a);
+      delay(15);
+    }
+  }
 }
