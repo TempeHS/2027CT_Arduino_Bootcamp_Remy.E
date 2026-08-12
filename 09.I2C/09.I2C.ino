@@ -44,12 +44,22 @@
     https://www.arduino.cc/reference/en/language/functions/communication/wire/
 */
 
-#include <Wire.h>
+#include "Arduino_SensorKit.h"
+
+#define Environment Environment_I2C   // your kit has the DHT20 (black) sensor on I2C
 
 void setup() {
-
+  Wire.begin();            // the DHT20 talks over I2C
+  Serial.begin(115200);
+  Environment.begin();
 }
 
 void loop() {
-
+  Serial.print("Temperature = ");
+  Serial.print(Environment.readTemperature());
+  Serial.println(" C");
+  Serial.print("Humidity = ");
+  Serial.print(Environment.readHumidity());
+  Serial.println(" %");
+  delay(2000);
 }
