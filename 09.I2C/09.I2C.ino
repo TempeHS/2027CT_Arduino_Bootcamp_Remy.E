@@ -50,16 +50,24 @@
 
 void setup() {
   Wire.begin();            // the DHT20 talks over I2C
-  Serial.begin(115200);
+  Oled.begin();
   Environment.begin();
 }
 
 void loop() {
-  Serial.print("Temperature = ");
-  Serial.print(Environment.readTemperature());
-  Serial.println(" C");
-  Serial.print("Humidity = ");
-  Serial.print(Environment.readHumidity());
-  Serial.println(" %");
+  Oled.setFont(u8x8_font_chroma48medium8_r);
+  Oled.setCursor(0, 33);
+  if (Environment.readTemperature() >= 30) {
+    Oled.print("TEMP TOO HIGH");
+    delay(2000);
+  }
+  else {
+  Oled.print("Temperature = ");
+  Oled.print(Environment.readTemperature());
+  Oled.println(" C");
+  Oled.print("Humidity = ");
+  Oled.print(Environment.readHumidity());
+  Oled.println(" %");
   delay(2000);
+  }
 }
