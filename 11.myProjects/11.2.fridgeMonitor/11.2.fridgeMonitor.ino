@@ -1,5 +1,5 @@
 /*
-  Author: 
+  Author:
   Learning Intention: Students will build a monitoring system that watches
   conditions and raises alerts, like the guardian inside a smart fridge
 
@@ -29,10 +29,22 @@
   Suggested Grove ports: Light A3, Buzzer D5, LED D6
 */
 
+//! >= 10 is normal light in this room (fridge light)
+
+int startTime = 0;
+
 void setup() {
-
+  Serial.begin(115200);
+  pinMode(5, OUTPUT);
 }
-
 void loop() {
+  if (analogRead(A3) >= 10) { startTime = millis(); }
+  while (analogRead(A3) >= 10){
+    if (millis() - startTime >= 10000){
+      tone(5, 1000);
+    }
+  }
+  noTone(5);
 
+  delay(10);
 }
