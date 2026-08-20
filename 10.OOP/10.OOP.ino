@@ -20,10 +20,76 @@
     https://youtu.be/cUVryWbVkXk
 */
 
-void setup() {
+class Led {
+  private:
+    int pin;          // properties: data each Led remembers
+    bool isOn;
 
+  public:
+    Led(int ledPin) {  // constructor: runs when an object is created
+      pin = ledPin;
+      isOn = false;
+    }
+
+    void begin() {
+      pinMode(pin, OUTPUT);
+      digitalWrite(pin, LOW);
+    }
+
+    void turnOn() {    // methods: things every Led can do
+      digitalWrite(pin, HIGH);
+      isOn = true;
+    }
+
+    void turnOff() {
+      digitalWrite(pin, LOW);
+      isOn = false;
+    }
+
+    void toggle() {
+      if (isOn) {
+        turnOff();
+      } else {
+        turnOn();
+      }
+    }
+};
+
+class Button {
+  private:
+    int pin;
+
+  public:
+    Button(int buttonPin) {
+      pin = buttonPin;
+    }
+    void begin() {
+      pinMode(pin, INPUT);
+      digitalWrite(pin, LOW);
+    }
+    bool isPressed(){
+      if (digitalRead(pin)){
+        return true;
+      }
+      return false;
+    }
+
+};
+
+Led led(6);    // the Grove LED module on D6
+Button button(4);
+
+void setup() {
+  led.begin();
+  button.begin();
+
+  Serial.begin(115200);
 }
 
 void loop() {
+  if (button.isPressed()) {
+    led.toggle();
+  }
 
+  delay(100);
 }
